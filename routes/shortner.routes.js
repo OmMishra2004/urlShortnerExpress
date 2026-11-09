@@ -1,7 +1,6 @@
 import express from "express";
 import { renderHomePage,renderReportPage,redirectToOriginalUrl,createNewShortLink } from "../controllers/shortner.controller.js"
 
-
 const router = express.Router()
 
 router.get("/", renderHomePage)

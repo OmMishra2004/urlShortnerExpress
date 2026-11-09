@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>URL Shortner</title>
 </head>
+
 <body>
     <div id="container">
         <h1>URL Shortner</h1>
@@ -21,8 +23,16 @@
             <button type="submit">Shorten</button>
         </form>
         <h2>Shortened URLs:</h2>
-        <ul>[Shortened URLs will be displayed here]</ul>
+        <ul>
+            <% for(let shortCode in links){%>
+                <li><a href="/<%=shortCode%>" target="_blank">
+                        <%=host%>/<%=shortCode%>
+                    </a> --> <%= links[shortCode]%>
+                </li>
+                <%} %>
+        </ul>
     </div>
     <!-- <script src="script.js"></script> -->
 </body>
+
 </html>

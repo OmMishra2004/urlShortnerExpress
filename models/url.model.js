@@ -21,13 +21,3 @@ export const saveLinks = async (links) => {
     await fs.writeFile(dataFilePath, JSON.stringify(links), "utf-8")
     return 
 }
-
-export const getStr = async (links,req) => {
-    const htmlFile=await fs.readFile(path.join("views", "index.html"), "utf-8")
-    const str = htmlFile.toString().replace("[Shortened URLs will be displayed here]", Object.entries(links).map(
-        ([shortCode, url]) => {
-            return `<li><a href="/${shortCode}" target="_blank">${req.get("host")}/${shortCode}</a> --> ${url}</li>`
-        }
-    ).join(""))
-    return str
-}

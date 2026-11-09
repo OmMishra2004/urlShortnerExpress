@@ -1,18 +1,17 @@
-import { getStr, loadLinks,saveLinks } from "../models/url.model.js"
+import { loadLinks,saveLinks } from "../models/url.model.js"
 import crypto from "crypto"
 
 export const renderHomePage=async(req, res) => {
     try {
         const links = await loadLinks()
-        const str = await getStr(links,req)
-        return res.status(200).send(str)
+        return res.render("index",{links,host:req.get("host")})
     } catch (error) {
         console.error(error)
         return res.status(500).send("Internal server error")
     }
 }
 
-export const renderReportPage=(req,res)=>{
+export const renderReportPage=(req,res)=>{ 
     const userData={
         name: "Om",
         age:22
