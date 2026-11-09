@@ -1,0 +1,33 @@
+import path from "path"
+import fs from "fs/promises"
+
+
+const dataFilePath = path.join("data", "links.json")
+
+export const loadLinks = async () => {
+    try {
+        const rawData = await fs.readFile(dataFilePath, "utf-8")
+        return JSON.parse(rawData)
+    } catch (error) {
+        if (error.code === "ENOENT") {
+            await fs.writeFile(dataFilePath, JSON.stringify({}), "utf-8")
+            return {}
+        }
+        throw error
+    }
+}
+
+export const saveLinks = async (links) => {
+    await fs.writeFile(dataFilePath, JSON.stringify(links), "utf-8")
+    return 
+}
+
+export const getStr = async (links,req) => {
+    const htmlFile=await fs.readFile(path.join("views", "index.html"), "utf-8")
+    const str = htmlFile.toString().replace("[Shortened URLs will be displayed here]", Object.entries(links).map(
+        ([shortCode, url]) => {
+            return `<li><a href="/${shortCode}" target="_blank">${req.get("host")}/${shortCode}</a> --> ${url}</li>`
+        }
+    ).join(""))
+    return str
+}
